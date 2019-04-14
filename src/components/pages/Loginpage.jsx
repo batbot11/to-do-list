@@ -1,5 +1,8 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Form, Button} from "semantic-ui-react";
+import {login} from "../actions/auth";
+import InlineText from "../messages/InlineText";
 
 class Loginpage extends React.Component {
 
@@ -19,10 +22,12 @@ class Loginpage extends React.Component {
     }
 
     onSubmit = () => {
-        console.log(this.state.data)
+        this.props.login(this.state.data).then(() => this.props.history.push("/dashboard"))
+        .catch(err => this.setState({errors: err.response.data}))
     }
 
     render () {
+        const {errors} = this.state;
         return (
             <div>
                 <h1>Login Page</h1>
@@ -34,6 +39,7 @@ class Loginpage extends React.Component {
                         name = "username"
                         onChange = {this.onChange}
                         />
+                        {errors.username && <InlineText text={errors.username} />}
                     </Form.Field>
                     <Form.Field>
                         <label>Password</label>
@@ -42,6 +48,7 @@ class Loginpage extends React.Component {
                         name = "password"
                         onChange = {this.onChange}
                         />
+                    {errors.password && <InlineText text={errors.password} />}
                     </Form.Field>
                     <Button primary >Login</Button>
                 </Form>
@@ -50,4 +57,4 @@ class Loginpage extends React.Component {
     }
 }
 
-export default Loginpage;
+export default connect(null, {login})(Loginpage);

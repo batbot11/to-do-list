@@ -8,9 +8,10 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import "semantic-ui-css/semantic.min.css";
 import './index.css';
 import App from './App.jsx';
+import UserReducer from "./components/reducers/UserReducer";
 import * as serviceWorker from './serviceWorker';
 
-const rootReducer = combineReducers({user: () => ([])});
+const rootReducer = combineReducers({user: UserReducer});
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(

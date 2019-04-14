@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Form, Button} from "semantic-ui-react";
 import {signup} from "../actions/auth";
+import InlineText from "../messages/InlineText";
 
 class Signuppage extends React.Component {
 
@@ -22,10 +23,13 @@ class Signuppage extends React.Component {
     }
 
     onSubmit = () => {
-        this.props.signup(this.state.data)
+        this.props.signup(this.state.data).then(() => this.props.history.push("/dashboard"))
+        .catch(err => this.setState({errors: err.response.data}) )
+        
     }
 
     render () {
+        const {errors} = this.state;
         return (
             <div>
                 <h1>Sign Up Page</h1>
@@ -37,6 +41,7 @@ class Signuppage extends React.Component {
                         name = "username"
                         onChange = {this.onChange}
                         />
+                        {errors.username && <InlineText text={errors.username} />}
                     </Form.Field>
                     <Form.Field>
                         <label >Password</label>
