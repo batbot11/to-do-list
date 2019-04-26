@@ -1,1 +1,4 @@
 export const USER_SIGNED_UP = "USER_SIGNED_UP";
+export const OPEN_TODO_FORM = "OPEN_TODO_FORM";
+export const DISPLAY_TODOS = "DISPLAY_TODOS";
+export const TOGGLE_ISDONE = "TOGGLE_ISDONE";
