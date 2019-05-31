@@ -1,8 +1,9 @@
-import { OPEN_TODO_FORM, DISPLAY_TODOS, TOGGLE_ISDONE } from "../constants/constants";
+import { OPEN_TODO_FORM, DISPLAY_TODOS, TOGGLE_ISDONE, ADDED_TO_LIST, DELETE_TASK, FILL_FORM, UPDATE_TASK, REMOVE_TODOS } from "../constants/constants";
 
 const initialState = {
     openTodoForm: false,
-    todos: []
+    todos: [],
+    selectedTodo: null
 }
 
 
@@ -13,6 +14,10 @@ export default function (state = initialState, action) {
         return {...state, openTodoForm: true}
         case DISPLAY_TODOS:
         return {...state, todos: action.payload};
+        case ADDED_TO_LIST:
+        return {...state, openTodoForm: false,
+        todos: [...state.todos, action.payload]
+        }
         case TOGGLE_ISDONE:
         return {...state,
         todos: [...state.todos.map(todo => {
@@ -20,7 +25,16 @@ export default function (state = initialState, action) {
             else return action.payload
         })]
         }
-       
+       case DELETE_TASK:
+        return {...state, 
+        todos: [...state.todos.filter(todo => todo._id !== action.payload)]
+        }
+        case FILL_FORM:
+            return {...state,
+            selectedTodo: {...state.todos.filter(todo => todo._id === action.payload)[0]}
+        }
+        case REMOVE_TODOS:
+        return initialState;
         default: return state
     }
 }
